@@ -62,7 +62,7 @@
             <div th:each="video : ${videos}" class="video-item">
                 <!-- BAL OLDAL: Videó információ -->
                 <div class="video-info">
-                    <span th:text="${video.folder.path} + '/' + ${video.name}">Videó neve</span>
+                    <span th:text="${video.fullName}">Videó neve</span>
                 </div>
 
                 <!-- JOBB OLDAL: Gomb -->
