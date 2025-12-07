@@ -86,3 +86,44 @@ document.addEventListener('DOMContentLoaded', function () {
     toggleVideoVisibility(false);
     updateVideoTitle(null);
 });
+
+function updateSearchMode() {
+    const selectedMode = document.querySelector('input[name="mode"]:checked').value;
+    const folderSelection = document.getElementById('folderSelection');
+    const actorSelection = document.getElementById('actorSelection');
+    
+    // Hide all selection dropdowns initially
+    if (folderSelection) folderSelection.style.display = 'none';
+    if (actorSelection) actorSelection.style.display = 'none';
+    
+    // Show appropriate dropdown based on selection
+    if (selectedMode === 'folder' && folderSelection) {
+        folderSelection.style.display = 'block';
+    } else if (selectedMode === 'actor' && actorSelection) {
+        actorSelection.style.display = 'block';
+    }
+    
+    // If "All" is selected, redirect to /videos to show all videos
+    if (selectedMode === 'all') {
+        console.log('All videos mode selected - redirecting to /videos');
+        window.location.href = '/videos';
+    }
+}
+
+function selectFolder() {
+    const selectedFolder = document.getElementById('folderSelect').value;
+    if (selectedFolder) {
+        console.log('Selected folder:', selectedFolder);
+        // Submit the form to call /videos/findByFolder with the selected folder
+        document.getElementById('folderForm').submit();
+    }
+}
+
+function selectActor() {
+    const selectedActor = document.getElementById('actorSelect').value;
+    if (selectedActor) {
+        console.log('Selected actor:', selectedActor);
+        // Submit the form to call /videos/findByActor with the selected actor
+        document.getElementById('actorForm').submit();
+    }
+}
