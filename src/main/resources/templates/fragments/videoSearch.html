@@ -1,47 +1,251 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <style>
+        /* Modern Radio Button Styles */
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 12px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            border: 1px solid #dee2e6;
+        }
+
+        .radio-option {
+            position: relative;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-label {
+            display: block;
+            padding: 14px 18px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-size: 14px;
+            color: #495057;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radio-label::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .radio-label:hover::before {
+            left: 100%;
+        }
+
+        .radio-label:hover {
+            border-color: #007bff;
+            background: #f8f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.2);
+            color: #007bff;
+        }
+
+        .radio-option input[type="radio"]:checked + .radio-label {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border-color: #0056b3;
+            box-shadow: 0 6px 25px rgba(0, 123, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .radio-option input[type="radio"]:checked + .radio-label::after {
+            content: '✓';
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+            animation: checkmark 0.3s ease-in-out;
+        }
+
+        @keyframes checkmark {
+            0% { transform: scale(0) rotate(45deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(45deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Dropdown Styles */
+        .dropdown-section {
+            margin-top: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #495057;
+            font-size: 15px;
+        }
+
+        .dropdown-section select {
+            width: 100%;
+            padding: 14px 18px 14px 45px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 14px;
+            background: white url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEgMUw2IDZMMTEgMSIgc3Ryb2tlPSIjNjk3Nzg5IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPgo=') no-repeat right 14px center;
+            background-size: 12px 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .dropdown-section select option {
+            padding: 12px 16px;
+            background: white;
+            color: #495057;
+            border: none;
+            margin: 2px 0;
+        }
+
+        .dropdown-section select option:hover {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .dropdown-section select option:checked,
+        .dropdown-section select option:selected {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            font-weight: 600;
+        }
+
+        .dropdown-section select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1), 0 4px 20px rgba(0, 123, 255, 0.15);
+            transform: translateY(-1px);
+            background-color: #f8f9ff;
+        }
+
+        .dropdown-section select:hover {
+            border-color: #007bff;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+            background-color: #f8f9ff;
+        }
+
+        /* Custom select wrapper for better styling */
+        .select-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .select-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcgN0wxMCAxMEwxMyA3IiBzdHJva2U9IiM2OTc3ODkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxjaXJjbGUgY3g9IjEwIiBjeT0iMTAiIHI9IjgiIHN0cm9rZT0iIzY5Nzc4OSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KPC9zdmc+Cg==') no-repeat center;
+            background-size: contain;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .dropdown-section.folder-section .select-wrapper::before {
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMgNVYxNUMzIDE1LjU1MjMgMy40NDc3MiAxNiA0IDE2SDE2QzE2LjU1MjMgMTYgMTcgMTUuNTUyMyAxNyAxNVY3QzE3IDYuNDQ3NzIgMTYuNTUyMyA2IDE2IDZIMTBMOCA0SDRDMy40NDc3MiA0IDMgNC40NDc3MiAzIDVaIiBzdHJva2U9IiMwMDdiZmYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==') no-repeat center;
+        }
+
+        .dropdown-section.actor-section .select-wrapper::before {
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTAiIGN5PSI3IiByPSI0IiBzdHJva2U9IiMwMDdiZmYiIHN0cm9rZS13aWR0aD0iMS41Ii8+CjxwYXRoIGQ9Ik0zIDE4VjE2QzMgMTMuNzkwOCA0Ljc5MDg2IDEyIDcgMTJIMTNDMTUuMjA5MSAxMiAxNyAxMy43OTA4IDE3IDE2VjE4IiBzdHJva2U9IiMwMDdiZmYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==') no-repeat center;
+        }
+    </style>
+</head>
+
 <body>
     <div th:fragment="videoSearchFragment(folders, actors, selectedMode, selectedFolder, selectedActor)">
-        <div>
-            <label>
-                <input type="radio" name="mode" value="all" th:checked="${selectedMode == 'all'}" onclick="updateSearchMode()"> All
-            </label>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="radio" name="mode" value="all" id="radio-all" th:checked="${selectedMode == 'all'}" onclick="updateSearchMode()">
+                <label for="radio-all" class="radio-label">🏠 Összes</label>
+            </div>
 
-            <label>
-                <input type="radio" name="mode" value="folder" th:checked="${selectedMode == 'folder'}" onclick="updateSearchMode()"> Find by Folder
-            </label>
+            <div class="radio-option">
+                <input type="radio" name="mode" value="folder" id="radio-folder" th:checked="${selectedMode == 'folder'}" onclick="updateSearchMode()">
+                <label for="radio-folder" class="radio-label">📁 Mappa</label>
+            </div>
 
-            <label>
-                <input type="radio" name="mode" value="actor" th:checked="${selectedMode == 'actor'}" onclick="updateSearchMode()"> Find by Actor
-            </label>
+            <div class="radio-option">
+                <input type="radio" name="mode" value="actor" id="radio-actor" th:checked="${selectedMode == 'actor'}" onclick="updateSearchMode()">
+                <label for="radio-actor" class="radio-label">🎭 Színész</label>
+            </div>
         </div>
 
         <!-- Folder selection dropdown -->
-        <div id="folderSelection" th:style="${selectedMode == 'folder'} ? 'display: block; margin-top: 10px;' : 'display: none; margin-top: 10px;'">
+        <div id="folderSelection" class="dropdown-section folder-section" th:style="${selectedMode == 'folder'} ? 'display: block;' : 'display: none;'">
             <form action="/videos/findByFolder" method="get" id="folderForm">
-                <label for="folderSelect">Válassz mappát:</label>
-                <select id="folderSelect" name="folder" onchange="selectFolder()">
-                    <option value="">-- Válassz mappát --</option>
-                    <option th:each="folder : ${folders}" 
-                            th:value="${folder.path}" 
-                            th:text="${folder.path}"
-                            th:selected="${selectedFolder != null && selectedFolder == folder.path}"></option>
-                </select>
+                <label for="folderSelect">📁 Válassz mappát:</label>
+                <div class="select-wrapper">
+                    <select id="folderSelect" name="folder" onchange="selectFolder()">
+                        <option value="">🔍 Válassz egy mappát a böngészéshez...</option>
+                        <option th:each="folder : ${folders}" 
+                                th:value="${folder.path}" 
+                                th:text="${'📂 ' + folder.path}"
+                                th:selected="${selectedFolder != null && selectedFolder == folder.path}"></option>
+                    </select>
+                </div>
             </form>
         </div>
 
         <!-- Actor selection dropdown -->
-        <div id="actorSelection" th:style="${selectedMode == 'actor'} ? 'display: block; margin-top: 10px;' : 'display: none; margin-top: 10px;'">
+        <div id="actorSelection" class="dropdown-section actor-section" th:style="${selectedMode == 'actor'} ? 'display: block;' : 'display: none;'">
             <form action="/videos/findByActor" method="get" id="actorForm">
-                <label for="actorSelect">Válassz színészt:</label>
-                <select id="actorSelect" name="actor" onchange="selectActor()">
-                    <option value="">-- Válassz színészt --</option>
-                    <option th:each="actor : ${actors}" 
-                            th:value="${actor.name}" 
-                            th:text="${actor.name}"
-                            th:selected="${selectedActor != null && selectedActor == actor.name}"></option>
-                </select>
+                <label for="actorSelect">🎭 Válassz színészt:</label>
+                <div class="select-wrapper">
+                    <select id="actorSelect" name="actor" onchange="selectActor()">
+                        <option value="">⭐ Válassz egy színészt a szűréshez...</option>
+                        <option th:each="actor : ${actors}" 
+                                th:value="${actor.name}" 
+                                th:text="${'🎭 ' + actor.name}"
+                                th:selected="${selectedActor != null && selectedActor == actor.name}"></option>
+                    </select>
+                </div>
             </form>
         </div>
 
