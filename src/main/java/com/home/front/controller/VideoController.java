@@ -43,10 +43,11 @@ public class VideoController {
     public ResponseEntity<Resource> streamVideo(
             HttpServletRequest request,
             @RequestHeader(value = "Range", required = true) String rangeHeader) {
-
-        String videoPath = URLEncoder.encode(request.getRequestURI()
-                .substring(request.getRequestURI().indexOf("/stream/") + "/stream/".length()), StandardCharsets.UTF_8);
-        return videoClient.streamVideo(videoPath, rangeHeader);
+        return videoClient.streamVideo(
+                URLEncoder.encode(request.getRequestURI()
+                        .substring(request.getRequestURI().indexOf("/stream/") + "/stream/".length()),
+                        StandardCharsets.UTF_8),
+                rangeHeader);
     }
 
     private HomeRequest<?> setHeader(HomeRequest<?> homeRequest) {
