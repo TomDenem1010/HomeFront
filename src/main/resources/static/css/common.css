@@ -9,7 +9,7 @@ body {
 
 main {
     flex: 1;
-    padding: 20px;
+    padding: 0px;
     overflow-y: auto;
     background: white;
     border-radius: 8px;

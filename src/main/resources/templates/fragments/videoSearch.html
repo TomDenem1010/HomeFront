@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <div th:fragment="videoSearchFragment(folders, actors)">
+
+
+        <div>
+            <label>
+                <input type="radio" name="mode" value="all" checked onclick="updateSearchMode()"> All
+            </label>
+
+            <label>
+                <input type="radio" name="mode" value="folder" onclick="updateSearchMode()"> Find by Folder
+            </label>
+
+            <label>
+                <input type="radio" name="mode" value="actor" onclick="updateSearchMode()"> Find by Actor
+            </label>
+        </div>
+
+    </div>
+</body>
+
+</html>

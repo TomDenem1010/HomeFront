@@ -13,13 +13,13 @@
         }
 
         .video-list-section {
-            width: 500px; 
-            min-width: 500px; 
-            max-width: 500px; 
+            width: 500px;
+            min-width: 500px;
+            max-width: 500px;
             height: 100%;
             background: #f8f9fa;
             border-left: 2px solid #dee2e6;
-            overflow: hidden; 
+            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -30,12 +30,15 @@
             color: white;
             font-weight: bold;
             border-bottom: 1px solid #dee2e6;
-            flex-shrink: 0; /* Header doesn't shrink */
+            flex-shrink: 0;
+            /* Header doesn't shrink */
         }
 
         .video-list-content {
-            flex: 1; /* Takes remaining height */
-            overflow-y: auto; /* Scrollable content */
+            flex: 1;
+            /* Takes remaining height */
+            overflow-y: auto;
+            /* Scrollable content */
             padding: 8px;
         }
 
@@ -68,6 +71,8 @@
     <main>
         <!-- Video Player - Left side (flexible) -->
         <div class="video-player-section">
+            <div th:replace="fragments/videoSearch :: videoSearchFragment(folders=${folders}, actors=${actors})">
+            </div>
             <div th:replace="fragments/videoPlayer :: videoPlayerFragment">
             </div>
         </div>
