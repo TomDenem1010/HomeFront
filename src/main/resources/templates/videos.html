@@ -5,6 +5,59 @@
     <meta charset="UTF-8">
     <title>Videók</title>
     <link rel="stylesheet" th:href="@{/css/common.css}">
+    <style>
+        .video-player-section {
+            flex: 1;
+            overflow-y: auto;
+            background: #ffffff;
+        }
+
+        .video-list-section {
+            width: 500px; 
+            min-width: 500px; 
+            max-width: 500px; 
+            height: 100%;
+            background: #f8f9fa;
+            border-left: 2px solid #dee2e6;
+            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-list-header {
+            padding: 16px;
+            background: #343a40;
+            color: white;
+            font-weight: bold;
+            border-bottom: 1px solid #dee2e6;
+            flex-shrink: 0; /* Header doesn't shrink */
+        }
+
+        .video-list-content {
+            flex: 1; /* Takes remaining height */
+            overflow-y: auto; /* Scrollable content */
+            padding: 8px;
+        }
+
+        /* Custom scrollbar for video list */
+        .video-list-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .video-list-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .video-list-content::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .video-list-content::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
 </head>
 
 <body>
@@ -13,13 +66,20 @@
 
     <!-- Fő tartalom -->
     <main>
-        <div style="display: flex; gap: 20px;">
-            <div style="width: 60%;"
-                th:replace="fragments/videoPlayer :: videoPlayerFragment">
+        <!-- Video Player - Left side (flexible) -->
+        <div class="video-player-section">
+            <div th:replace="fragments/videoPlayer :: videoPlayerFragment">
             </div>
+        </div>
 
-            <div style="width: 40%;"
-                th:replace="fragments/videoList :: videoListFragment(videos=${videos})">
+        <!-- Video List - Right side (fixed width, scrollable) -->
+        <div class="video-list-section">
+            <div class="video-list-header">
+                📹 Video Library
+            </div>
+            <div class="video-list-content">
+                <div th:replace="fragments/videoList :: videoListFragment(videos=${videos})">
+                </div>
             </div>
         </div>
     </main>

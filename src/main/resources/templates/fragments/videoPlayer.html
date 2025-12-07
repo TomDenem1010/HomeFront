@@ -2,10 +2,62 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="videoPlayerFragment">
+    <style>
+        #videoPlayer {
+            display: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        #videoPlayer.visible {
+            display: block;
+            opacity: 1;
+        }
+        
+        .video-placeholder {
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            color: #6c757d;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .video-placeholder.hidden {
+            opacity: 0;
+            display: none;
+        }
+        
+        .video-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 16px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: -webkit-linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 6px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .video-title.default {
+            background: #6c757d;
+            font-style: italic;
+        }
+    </style>
 
-    <h3>Videólejátszó</h3>
+    <!-- Video title - changes based on selected video -->
+    <div id="videoTitle" class="video-title default">Videólejátszó</div>
+    
+    <!-- Placeholder when no video is selected -->
+    <div id="videoPlaceholder" class="video-placeholder">
+        <h4>📹 Válassz egy videót a lejátszáshoz</h4>
+        <p>Kattints egy videóra a jobb oldali listában</p>
+    </div>
 
-    <video id="videoPlayer" width="100%" controls>
+    <!-- Video player (hidden by default) -->
+    <video id="videoPlayer" width="100%" controls onloadeddata="this.volume = 0.3;">
         <source id="videoSource" type="video/mp4" src="">
         A böngésződ nem támogatja a videó lejátszást.
     </video>
