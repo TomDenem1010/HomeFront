@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Videó Portál</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+    <!-- Menü fragment beillesztése -->
+    <div th:replace="fragments/menu :: mainMenu"></div>
+
+    <!-- Fő tartalom -->
+    <main>
+        <header>Főoldal</header>
+        <p th:text="${greetings}">Greetings placeholder</p>
+    </main>
+</body>
+</html>

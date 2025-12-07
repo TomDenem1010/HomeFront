@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Videók</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+
+<body>
+    <!-- Menü fragment beillesztése -->
+    <div th:replace="fragments/menu :: mainMenu"></div>
+
+    <!-- Fő tartalom -->
+    <main>
+        <div style="display: flex; gap: 20px;">
+            <div style="width: 60%;"
+                th:replace="fragments/videoPlayer :: videoPlayerFragment">
+            </div>
+
+            <div style="width: 40%;"
+                th:replace="fragments/videoList :: videoListFragment(videos=${videos})">
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/videos.js"></script>
+</body>
+
+</html>

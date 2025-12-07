@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <div th:fragment="videoListFragment(videos)">
+
+        <style>
+            .video-list-container {
+                background: #fff;
+                border-radius: 8px;
+                padding: 16px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .video-item {
+                display: flex;
+                justify-content: space-between;
+                /* Balra és jobbra igazítás */
+                align-items: center;
+                /* Függőleges középre igazítás */
+                padding: 12px;
+                margin-bottom: 8px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                background: #fafafa;
+                transition: background 0.2s;
+            }
+
+            .video-item:hover {
+                background: #f0f0f0;
+            }
+
+            .video-info {
+                /* Ez balra kerül */
+                flex: 1;
+                font-weight: 500;
+            }
+
+            .video-actions {
+                /* Ez jobbra kerül */
+                margin-left: 10px;
+            }
+
+            .play-btn {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            .play-btn:hover {
+                background-color: #2980b9;
+            }
+        </style>
+
+        <div class="video-list-container">
+            <h3>Videó lista</h3>
+
+            <div th:each="video : ${videos}" class="video-item">
+                <!-- BAL OLDAL: Videó információ -->
+                <div class="video-info">
+                    <span th:text="${video.folder.path} + '/' + ${video.name}">Videó neve</span>
+                </div>
+
+                <!-- JOBB OLDAL: Gomb -->
+                <div class="video-actions">
+                    <button class="play-btn" th:data-name="${video.fullName}"
+                        th:onclick="playVideo(this.getAttribute('data-name'))">
+                        ▶ Lejátszás
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+</body>
+
+</html>
