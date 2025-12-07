@@ -2,39 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-    <div th:fragment="videoSearchFragment(folders, actors)">
+    <div th:fragment="videoSearchFragment(folders, actors, selectedMode, selectedFolder, selectedActor)">
         <div>
             <label>
-                <input type="radio" name="mode" value="all" checked onclick="updateSearchMode()"> All
+                <input type="radio" name="mode" value="all" th:checked="${selectedMode == 'all'}" onclick="updateSearchMode()"> All
             </label>
 
             <label>
-                <input type="radio" name="mode" value="folder" onclick="updateSearchMode()"> Find by Folder
+                <input type="radio" name="mode" value="folder" th:checked="${selectedMode == 'folder'}" onclick="updateSearchMode()"> Find by Folder
             </label>
 
             <label>
-                <input type="radio" name="mode" value="actor" onclick="updateSearchMode()"> Find by Actor
+                <input type="radio" name="mode" value="actor" th:checked="${selectedMode == 'actor'}" onclick="updateSearchMode()"> Find by Actor
             </label>
         </div>
 
         <!-- Folder selection dropdown -->
-        <div id="folderSelection" style="display: none; margin-top: 10px;">
+        <div id="folderSelection" th:style="${selectedMode == 'folder'} ? 'display: block; margin-top: 10px;' : 'display: none; margin-top: 10px;'">
             <form action="/videos/findByFolder" method="get" id="folderForm">
                 <label for="folderSelect">Válassz mappát:</label>
                 <select id="folderSelect" name="folder" onchange="selectFolder()">
                     <option value="">-- Válassz mappát --</option>
-                    <option th:each="folder : ${folders}" th:value="${folder.path}" th:text="${folder.path}"></option>
+                    <option th:each="folder : ${folders}" 
+                            th:value="${folder.path}" 
+                            th:text="${folder.path}"
+                            th:selected="${selectedFolder != null && selectedFolder == folder.path}"></option>
                 </select>
             </form>
         </div>
 
         <!-- Actor selection dropdown -->
-        <div id="actorSelection" style="display: none; margin-top: 10px;">
+        <div id="actorSelection" th:style="${selectedMode == 'actor'} ? 'display: block; margin-top: 10px;' : 'display: none; margin-top: 10px;'">
             <form action="/videos/findByActor" method="get" id="actorForm">
                 <label for="actorSelect">Válassz színészt:</label>
                 <select id="actorSelect" name="actor" onchange="selectActor()">
                     <option value="">-- Válassz színészt --</option>
-                    <option th:each="actor : ${actors}" th:value="${actor.name}" th:text="${actor.name}"></option>
+                    <option th:each="actor : ${actors}" 
+                            th:value="${actor.name}" 
+                            th:text="${actor.name}"
+                            th:selected="${selectedActor != null && selectedActor == actor.name}"></option>
                 </select>
             </form>
         </div>

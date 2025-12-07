@@ -71,7 +71,7 @@
     <main>
         <!-- Video Player - Left side (flexible) -->
         <div class="video-player-section">
-            <div th:replace="fragments/videoSearch :: videoSearchFragment(folders=${folders}, actors=${actors})">
+            <div th:replace="fragments/videoSearch :: videoSearchFragment(folders=${folders}, actors=${actors}, selectedMode=${selectedMode}, selectedFolder=${selectedFolder}, selectedActor=${selectedActor})">
             </div>
             <div th:replace="fragments/videoPlayer :: videoPlayerFragment">
             </div>

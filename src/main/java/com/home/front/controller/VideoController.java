@@ -43,6 +43,7 @@ public class VideoController {
         model.put("videos", findVideos());
         model.put("folders", findFolders());
         model.put("actors", findActors());
+        model.put("selectedMode", "all");
         return new ModelAndView("videos", model);
     }
 
@@ -52,6 +53,8 @@ public class VideoController {
         model.put("videos", findByFolder(folder));
         model.put("folders", findFolders());
         model.put("actors", findActors());
+        model.put("selectedMode", "folder");
+        model.put("selectedFolder", folder);
         return new ModelAndView("videos", model);
     }
 
@@ -61,6 +64,8 @@ public class VideoController {
         model.put("videos", findByActor(actor));
         model.put("folders", findFolders());
         model.put("actors", findActors());
+        model.put("selectedMode", "actor");
+        model.put("selectedActor", actor);
         return new ModelAndView("videos", model);
     }
 
