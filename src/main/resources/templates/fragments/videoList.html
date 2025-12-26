@@ -15,9 +15,7 @@
             .video-item {
                 display: flex;
                 justify-content: space-between;
-                /* Balra és jobbra igazítás */
                 align-items: center;
-                /* Függőleges középre igazítás */
                 padding: 12px;
                 margin-bottom: 8px;
                 border: 1px solid #ddd;
@@ -31,14 +29,20 @@
             }
 
             .video-info {
-                /* Ez balra kerül */
                 flex: 1;
                 font-weight: 500;
+                min-width: 0;
+                word-wrap: break-word;
+                word-break: break-all;
+                overflow-wrap: break-word;
+                hyphens: auto;
+                max-width: calc(100% - 120px);
             }
 
             .video-actions {
-                /* Ez jobbra kerül */
                 margin-left: 10px;
+                flex-shrink: 0;
+                min-width: 100px;
             }
 
             .play-btn {
