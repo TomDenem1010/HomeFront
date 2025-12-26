@@ -14,7 +14,7 @@
 	<properties>
 		<java.version>25</java.version>
 		<maven.compiler.version>3.14.1</maven.compiler.version>
-		<home.common.version>0.0.6</home.common.version>
+		<home.common.version>1.1.0</home.common.version>
 		<lombok.version>1.18.42</lombok.version>
 		<spotless.version>3.1.0</spotless.version>
 		<google-java-format.version>1.33.0</google-java-format.version>
